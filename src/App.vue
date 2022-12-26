@@ -1,9 +1,24 @@
 <template>
-    <div>
-        <h1>Forms & inputs</h1>
-    </div>
+    <h1>Forms & inputs</h1>
+    <SignupFormVue />
 </template>
 <script>
-export default {};
+import SignupFormVue from "./components/SignupForm.vue";
+export default {
+    name: "App",
+    components: { SignupFormVue },
+};
 </script>
-<style></style>
+
+<style>
+#app {
+    margin-top: 60px;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    text-align: center;
+    color: #2c3e50;
+}
+body {
+    margin: 0;
+    background-color: #eee;
+}
+</style>
