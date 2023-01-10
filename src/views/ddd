@@ -1,21 +1,22 @@
 <template>
   <div class="hello container">
     <h2 v-if="errMessage">{{ errMessage }}</h2>
-    <ul class="list-group list-group-numbered">
+    <ul class="list-group">
       <li
-        v-for="product in products"
+        v-for="( product, index) in products"
         :key="product.id"
-        class="list-group-item d-flex justify-content-between"
+        class="list-group-item d-flex justify-content-between align-items-center"
       >
         <div>
+          <h2>{{product.id}}</h2>
           <p>{{ product.title }}</p>
           <div class="fw-light">{{ product.description }}</div>
         </div>
         <div>
           <button
             type="button"
-            class="btn btn-primary"
-            @click="deleteItem(product)"
+            class="btn btn-primary "
+            @click="deleteItem(index)"
           >
             delete
           </button>
@@ -28,10 +29,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "HelloWorld",
-  props: {
-    msg: String,
-  },
+  name: "test-crud",
   data() {
     return {
       products: [],
@@ -51,14 +49,16 @@ export default {
         this.errMessage = err.message;
       }
     },
-    async deleteItem(product) {
-      const id = product.id;
-      // this.closeItem = !this.closeItem;
+    async deleteItem(index) {
+      const id = index + 1
+      console.log("🚀 ~ file: TestCrud.vue:53 ~ deleteItem ~ id", id)
       try {
-        await axios.delete("https://dummyjson.com/products?limit=10", id, {});
+        await axios.delete(`https://dummyjson.com/products/${id}`)
       } catch (err) {
         this.errMessage = err.message;
       }
+      this.products.splice(index, 1)
+        // this.products = this.products.filter(item => item.id !== id)
     },
   },
   mounted() {
