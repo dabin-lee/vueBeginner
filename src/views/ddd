@@ -12,7 +12,11 @@
           <div class="fw-light">{{ product.description }}</div>
         </div>
         <div>
-          <button type="button" class="btn btn-primary" @click="deleteItem">
+          <button
+            type="button"
+            class="btn btn-primary"
+            @click="deleteItem(product)"
+          >
             delete
           </button>
         </div>
@@ -39,14 +43,22 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const dummy = await axios.get("https://dummyjson.com/products");
+        const dummy = await axios.get(
+          "https://dummyjson.com/products?limit=10"
+        );
         this.products = dummy.data.products;
       } catch (err) {
         this.errMessage = err.message;
       }
     },
-    deleteItem() {
-      this.closeItem = !this.closeItem;
+    async deleteItem(product) {
+      const id = product.id;
+      // this.closeItem = !this.closeItem;
+      try {
+        await axios.delete("https://dummyjson.com/products?limit=10", id, {});
+      } catch (err) {
+        this.errMessage = err.message;
+      }
     },
   },
   mounted() {
@@ -58,7 +70,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .container {
-  max-width: 960px;
+  max-width: 576px;
 }
 .deleteItem {
   width: 100%;
